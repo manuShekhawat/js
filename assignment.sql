@@ -164,3 +164,39 @@ ON UPDATE CASCADE
 )
 
 CREATE TABLE Course ()
+
+
+
+///====================mongoose=================================================================///
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/test')
+.then(()=>{console.log("yay");})
+.catch((err)=>{console.log(err);});
+
+const movieSchema = new mongoose.Schema({
+    title : String,
+    year : Number,
+    score : Number ,
+    rating : String
+});
+
+
+// make a model using the schema
+
+// mongoose will create a collection for us movies. Plural of Movie
+const Movie = mongoose.model('Movie' , movieSchema); // this gives us a class
+
+const first = new Movie({title : "first" , year : 2000 , score : 8 , rating : 'R'}); // new instance of movie
+
+Movie.insertMany([
+   {title : 'OH YEAG' , year : 1999 , score :1 , rating : 'A'},
+   {title: 'Moon' , year : 2001 , score: 10 , rating : 'S'},
+   {title : 'SKG' , year : 2001 , score : 10 , rating : 'H'},
+   {title : 'KSH' , year : 2000 , score : 9 , rating : 'A'},
+   {title : 'SHR' , year : 2002 , score : 8 ,rating : 'B'}
+]);
+
+Movie.findOneAndDelete({title : 'Moon'});
+
+
+////////=====================================================================///////////////////////////////////////
